@@ -3,7 +3,7 @@ package com.lx.myself.controller.sys;
 import com.lx.myself.tools.Encode64;
 import com.lx.myself.pojo.sys.SysUser;
 import com.lx.myself.service.sys.SysUserService;
-import com.lx.myself.tools.http.ErrorCode;
+import com.lx.myself.tools.http.ResultCode;
 import com.lx.myself.tools.http.ResponseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +32,7 @@ public class SysUserController {
         if (cip.isEmpty()){
             cip="数据异常，暂未获取到";
         }
-        boolean flag=SysUserServiceImp.userLogin(user.getUserName(),user.getPassword(),cip);
-//        if (flag){
-//            request.getSession().setAttribute("loginUser",user.getUserName());
-//            return "index";
-//        }else {
-//
-//            return ;
-//        }
-        return ResponseData.error(ErrorCode.ERROR_PASSWORD);
+        ResultCode resultCode=SysUserServiceImp.userLogin(user.getUserName(),user.getPassword(),cip);
+        return ResponseData.custom(resultCode,null);
     }
 }

@@ -1,9 +1,10 @@
 package com.lx.myself.tools.http;
 
-public enum ErrorCode {
+public enum ResultCode {
     SUCCESS(200,"成功"),
     ERROR_PASSWORD(201,"密码错误"),
-    NOTFIND_USER(202,"用户不存在");
+    NOTFIND_USER(202,"用户不存在"),
+    STATE_ABNORMAL(203,"账户状态异常");
 //    NO_PERMISSION(211,"权限不足"),
 //    SERVER_ERROR(10000,"服务器异常"),
 //    AUTH_ERROR(10001,"认证失败"),
@@ -16,7 +17,7 @@ public enum ErrorCode {
     private int code;
     private String msg;
 
-    ErrorCode(int code,String msg){
+    ResultCode(int code, String msg){
         this.code = code;
         this.msg = msg;
     }

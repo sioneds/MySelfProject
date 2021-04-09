@@ -3,8 +3,6 @@ package com.lx.myself.tools.http;
 
 import java.io.Serializable;
 
-import static com.lx.myself.tools.http.ErrorCode.SUCCESS;
-
 /**
  * ResponseData
  *
@@ -47,10 +45,12 @@ public class ResponseData implements Serializable {
         return new ResponseData(200,null,data);
     }
 
-    public static ResponseData error(ErrorCode errorCode) {
-        return new ResponseData(errorCode.getCode(),errorCode.getMsg(),null);
+    public static ResponseData error(ResultCode resultCode) {
+        return new ResponseData(resultCode.getCode(), resultCode.getMsg(),null);
     }
-
+    public static ResponseData custom(ResultCode resultCode,Object data) {
+        return new ResponseData(resultCode.getCode(), resultCode.getMsg(),data);
+    }
     public ResponseData(Integer code, String message, Object data) {
         this.code = code;
         this.message = message;
