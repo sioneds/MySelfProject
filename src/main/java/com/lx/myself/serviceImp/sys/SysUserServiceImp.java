@@ -11,8 +11,13 @@ import com.lx.myself.tools.http.ResultCode;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -28,19 +33,24 @@ public class SysUserServiceImp implements SysUserService {
      * @Description user sgin in
      */
     @Override
-    public ResultCode userLogin(String name, String password, String cip) {
+    public HashMap<String,Object> userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip) {
+        HashMap<String,Object> map =new HashMap<String,Object>();//store ResultCode and session id
         List<SysUser>  sysUserList= sysUserMapper.userLogin(name,password);
+        map.put("sessionId",request.getSession().getId());
         if (sysUserList==null||sysUserList.size()==0){
             //username is defind
-            return ResultCode.NOTFIND_USER;
+            map.put("ResultCode",ResultCode.NOTFIND_USER);
+            return map;
         }
         if (!sysUserList.get(0).getPassword().equals(password)){
             //password is error
-            return ResultCode.ERROR_PASSWORD;
+            map.put("ResultCode",ResultCode.ERROR_PASSWORD);
+            return map;
         }
         if (sysUserList.get(0).getState()!=1){
             //state is abnormal
-           return ResultCode.STATE_ABNORMAL;
+            map.put("ResultCode",ResultCode.STATE_ABNORMAL);
+            return map;
         }
         Date date= new Date();
         SysUser sysUser=sysUserList.get(0);
@@ -53,7 +63,17 @@ public class SysUserServiceImp implements SysUserService {
                 sysUser.getName(),
                 new Date(),
                 cip));
+//        if ("rememberMe".equals(rememberMe)){
+//            int seconds = 60*60*24;
+//            //声明cookie
+//            Cookie c = new Cookie("autoLogin",sysUser.getUserName());
+//            c.setMaxAge(seconds);
+//            //保存cookie
+//            response.addCookie(c);
+//        }
+        request.getSession().setAttribute("loginUser",sysUser);
         //success
-        return ResultCode.SUCCESS;
+        map.put("ResultCode",ResultCode.SUCCESS);
+        return map;
     }
 }
