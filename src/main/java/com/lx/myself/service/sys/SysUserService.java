@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 
-@Resource
+
 public interface SysUserService {
     /**
      * @author sioned
@@ -18,4 +18,10 @@ public interface SysUserService {
      * @Description  user sign in
      */
     public HashMap<String,Object> userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip);
+    /**
+     * @author sioned
+     * @date 2021/04/25 18:56
+     * @Description get user by userMap
+     */
+    public SysUser getUserByName(String getMapByName);
 }

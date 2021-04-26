@@ -4,7 +4,6 @@ import com.lx.myself.pojo.sys.SysLoginRecord;
 
 import javax.annotation.Resource;
 
-@Resource
 public interface SysLoginRecordService {
     /**
      * @author sioned

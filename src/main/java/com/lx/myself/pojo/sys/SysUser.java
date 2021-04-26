@@ -3,16 +3,23 @@ package com.lx.myself.pojo.sys;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author sioned
  * @date 2021/03/25 13:52
  * @Description user
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="sys_user")
 @Component
 public class SysUser implements Serializable {
@@ -40,136 +47,5 @@ public class SysUser implements Serializable {
     private Integer state;//1 is normal 2 is freeze 3 is ban
     @Column(name = "profile_photo", type = MySqlTypeConstant.VARCHAR, length = 255)
     private String profilePhoto;
-
-    public SysUser() {
-    }
-
-    public SysUser(String id, String name, String userName, String password, String email, String sex, Integer isAdmin, Date loginTime, Date signInTime, String lastIp, Integer state, String profilePhoto) {
-        this.id = id;
-        this.name = name;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.sex = sex;
-        this.isAdmin = isAdmin;
-        this.loginTime = loginTime;
-        this.signInTime = signInTime;
-        this.lastIp = lastIp;
-        this.state = state;
-        this.profilePhoto = profilePhoto;
-    }
-
-    @Override
-    public String toString() {
-        return "SysUser{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", sex='" + sex + '\'' +
-                ", isAdmin=" + isAdmin +
-                ", loginTime=" + loginTime +
-                ", signInTime=" + signInTime +
-                ", lastIp='" + lastIp + '\'' +
-                ", state=" + state +
-                ", profilePhoto='" + profilePhoto + '\'' +
-                '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Integer getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(Integer isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public Date getSignInTime() {
-        return signInTime;
-    }
-
-    public void setSignInTime(Date signInTime) {
-        this.signInTime = signInTime;
-    }
-
-    public String getLastIp() {
-        return lastIp;
-    }
-
-    public void setLastIp(String lastIp) {
-        this.lastIp = lastIp;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public String getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(String profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
+    private Set<SysRole> roles;
 }

@@ -22,5 +22,7 @@
     <update id="updateLastTimeAndIp">
         update sys_user set login_time = #{date} , last_ip = #{cip} where id = #{id}
     </update>
-
+    <select id="getUserByName" resultMap="BaseResultMap">
+        select * from sys_user where user_name= #{userName}
+    </select>
 </mapper>

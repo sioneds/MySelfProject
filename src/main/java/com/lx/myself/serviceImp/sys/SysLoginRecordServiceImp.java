@@ -3,6 +3,7 @@ package com.lx.myself.serviceImp.sys;
 import com.lx.myself.mapper.sys.SysLoginRecordMapper;
 import com.lx.myself.pojo.sys.SysLoginRecord;
 import com.lx.myself.service.sys.SysLoginRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 public class SysLoginRecordServiceImp implements SysLoginRecordService {
     @Resource
     SysLoginRecordMapper sysLoginRecordMapper;
+
     /**
      * @author sioned
      * @date 2021/03/25 13:52

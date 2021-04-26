@@ -6,34 +6,24 @@ import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import netscape.security.UserTarget;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 /**
- * @author sioned
- * @date 2021/03/25 13:52
- * @Description sign in record
- */
-
+ * sys_role_middle
+ *
+ * @author Administrator
+ * @date 2021/04/25 22:04
+ **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="sys_login_record")
+@Table(name="sys_role_middle")
 @Component
-public class SysLoginRecord {
+public class SysRoleMiddle {
     @Column(name = "id", type = MySqlTypeConstant.VARCHAR, isKey = true)
     private String id;
     @Column(name = "user_id", type = MySqlTypeConstant.VARCHAR, length = 64, isNull = false)
     private String userId;
-    @Column(name = "user_name", type = MySqlTypeConstant.VARCHAR, length = 64, isNull = false)
-    private String userName;
-    @Column(name = "name", type = MySqlTypeConstant.VARCHAR, length = 64, isNull = false)
-    private String name;
-    @Column(name = "login_time", type = MySqlTypeConstant.DATETIME)
-    private Date loginTime;
-    @Column(name = "cip", type = MySqlTypeConstant.VARCHAR, length = 64)
-    private String cip;
-
+    @Column(name = "role_id", type = MySqlTypeConstant.VARCHAR, length = 64, isNull = false)
+    private String roleId;
 }

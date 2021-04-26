@@ -36,7 +36,7 @@ public class SysUserController {
             cip="数据异常，暂未获取到";
         }
         HashMap<String,Object> map=SysUserServiceImp.userLogin(request,response,rememberMe,user.getUserName(),user.getPassword(),cip);
-        MySessionContext.addSession(request.getSession());
+//        MySessionContext.addSession(request.getSession());
         return ResponseData.custom((ResultCode) map.get("ResultCode"),map.get("sessionId"));
     }
 }
