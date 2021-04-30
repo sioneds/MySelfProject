@@ -41,6 +41,9 @@ public class SysUserServiceImp implements SysUserService {
     @Resource
     public SysPermissionsMapper sysPermissionsMapper;
 
+    @Resource
+    public RedisTools redisTools;
+
     HashMap<String,Object> map =new HashMap<String,Object>();
 
     /**
@@ -49,50 +52,24 @@ public class SysUserServiceImp implements SysUserService {
      * @Description user sgin in
      */
     @Override
-    public HashMap<String,Object> userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip) {
+    public ResultCode userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip) {
         map.clear();
-
-        //用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                name,
-                password
-        );
-        try {
-            subject.login(usernamePasswordToken);
-        } catch (UnknownAccountException e) {
-            map.put("ResultCode",ResultCode.NOTFIND_USER);
-            return map;
-        } catch (IncorrectCredentialsException e) {
-            map.put("ResultCode",ResultCode.ERROR_PASSWORD);
-            return map;
-        } catch (Exception e) {
-            map.put("ResultCode",ResultCode.STATE_ABNORMAL);
-            return map;
-        }
-        map.put("ResultCode",ResultCode.SUCCESS);
-
-        /*HashMap<String,Object> map =new HashMap<String,Object>();//store ResultCode and session id
         List<SysUser>  sysUserList= sysUserMapper.userLogin(name,password);
-        map.put("sessionId",request.getSession().getId());
         if (sysUserList==null||sysUserList.size()==0){
             //username is defind
-            map.put("ResultCode",ResultCode.NOTFIND_USER);
-            return map;
+            return ResultCode.NOTFIND_USER;
         }
         if (!sysUserList.get(0).getPassword().equals(password)){
             //password is error
-            map.put("ResultCode",ResultCode.ERROR_PASSWORD);
-            return map;
+            return ResultCode.ERROR_PASSWORD;
         }
         if (sysUserList.get(0).getState()!=1){
             //state is abnormal
-            map.put("ResultCode",ResultCode.STATE_ABNORMAL);
-            return map;
+            return ResultCode.STATE_ABNORMAL;
         }
         Date date= new Date();
         SysUser sysUser=sysUserList.get(0);
-        int i = sysUserMapper.updateLastTimeAndIp(cip, date,sysUser.getId());
+        sysUserMapper.updateLastTimeAndIp(cip, date,sysUser.getId());
         String uuid=StringTools.getUUID32();
         sysLoginRecordServiceImp.insertSysLoginRecord(new SysLoginRecord(
                 uuid,
@@ -101,18 +78,9 @@ public class SysUserServiceImp implements SysUserService {
                 sysUser.getName(),
                 new Date(),
                 cip));
-//        if ("rememberMe".equals(rememberMe)){
-//            int seconds = 60*60*24;
-//            //声明cookie
-//            Cookie c = new Cookie("autoLogin",sysUser.getUserName());
-//            c.setMaxAge(seconds);
-//            //保存cookie
-//            response.addCookie(c);
-//        }
         request.getSession().setAttribute("loginUser",sysUser);
         //success
-        map.put("ResultCode",ResultCode.SUCCESS);*/
-        return map;
+        return ResultCode.SUCCESS;
     }
 
 

@@ -51,6 +51,9 @@ public class ResponseData implements Serializable {
     public static ResponseData custom(ResultCode resultCode,Object data) {
         return new ResponseData(resultCode.getCode(), resultCode.getMsg(),data);
     }
+    public static ResponseData custom(ResultCode resultCode) {
+        return new ResponseData(resultCode.getCode(), resultCode.getMsg(),null);
+    }
     public ResponseData(Integer code, String message, Object data) {
         this.code = code;
         this.message = message;

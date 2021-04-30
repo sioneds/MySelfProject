@@ -16,12 +16,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RequestMapping("")
 @Controller
 public class SysUserController {
     @Resource
     public SysUserService SysUserServiceImp;
+
+    public Map<String,Object> resultMap=new LinkedHashMap();
     /**
      * @author sioned
      * @date 2021/03/25 13:54
@@ -34,9 +38,12 @@ public class SysUserController {
         //cip user IP and address
         if (cip.isEmpty()){
             cip="数据异常，暂未获取到";
+            return ResponseData.custom(ResultCode.NETWORK_ANOMALY);
         }
-        HashMap<String,Object> map=SysUserServiceImp.userLogin(request,response,rememberMe,user.getUserName(),user.getPassword(),cip);
-//        MySessionContext.addSession(request.getSession());
-        return ResponseData.custom((ResultCode) map.get("ResultCode"),map.get("sessionId"));
+        ResultCode resultCode=SysUserServiceImp.userLogin(request,response,rememberMe,user.getUserName(),user.getPassword(),cip);
+        String id = request.getSession().getId();
+        MySessionContext.addSession(request.getSession());
+        resultMap.put("sessionId",id);
+        return ResponseData.custom(resultCode,resultMap);
     }
 }

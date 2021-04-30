@@ -17,7 +17,7 @@ public interface SysUserService {
      * @date 2021/03/25 13:52
      * @Description  user sign in
      */
-    public HashMap<String,Object> userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip);
+    public ResultCode userLogin(HttpServletRequest request, HttpServletResponse response, String rememberMe, String name, String password, String cip);
     /**
      * @author sioned
      * @date 2021/04/25 18:56
