@@ -23,7 +23,13 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AccessInterceptor())
                 .addPathPatterns("/**");
         registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/**").excludePathPatterns("/sys/userLogin");
+                .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/sys/userLogin"
+                        ,"/webjars/**"
+                        ,"/swagger-ui.html"
+                        ,"/swagger-resources/**"
+                );
     }
 
 

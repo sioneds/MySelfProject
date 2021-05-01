@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Redis工具类*/
@@ -29,6 +30,7 @@ public  class RedisTools {
         sysUser.setPassword("");
         JSONObject jsonObject= (JSONObject) JSONObject.toJSON(sysUser);
         redisTemplate.opsForHash().put(key,HashKey,jsonObject.toJSONString());
+        setTempTime(key);
     }
 
     /**
@@ -37,6 +39,16 @@ public  class RedisTools {
      * @Description get Hash
      */
     public static Object getHash(String key, String HashKey){
+        setTempTime(key);
         return redisTemplate.opsForHash().get(key,HashKey);
+    }
+
+    /**
+     * @author sioned
+     * @date 2021/05/01 20:12
+     * @Description set tempTime by key
+     */
+    public static void setTempTime(String key){
+        redisTemplate.expire(key,5, TimeUnit.MINUTES);
     }
 }
