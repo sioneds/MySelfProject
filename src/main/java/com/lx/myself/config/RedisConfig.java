@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
  **/
 @Configuration
 public class RedisConfig {
-    @Bean
+    @Bean(name = "myRedisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
         RedisTemplate<String,Object> template=new RedisTemplate<String,Object>();
         template.setConnectionFactory(redisConnectionFactory);

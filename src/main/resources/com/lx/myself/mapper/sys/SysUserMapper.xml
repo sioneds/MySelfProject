@@ -25,4 +25,7 @@
     <select id="getUserByName" resultMap="BaseResultMap">
         select * from sys_user where user_name= #{userName}
     </select>
+    <select id="getUserByCip" resultMap="BaseResultMap">
+        select * from sys_user where last_ip= #{lastIp}
+    </select>
 </mapper>

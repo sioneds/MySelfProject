@@ -24,4 +24,17 @@ public interface SysUserService {
      * @Description get user by userMap
      */
     public SysUser getUserByName(String getMapByName);
+    /**
+     * @author sioned
+     * @date 2021/05/01 13:48
+     * @Description get user by cip
+     */
+    public SysUser getUserByCip(String cip);
+
+    /**
+     * @author sioned
+     * @date 2021/05/01 16:38
+     * @Description get user by redis
+     */
+    public Object getUserByRedis(String cip);
 }

@@ -32,4 +32,10 @@ public interface SysUserMapper {
      * @Description get user by name
      */
     SysUser getUserByName(String userName);
+    /**
+     * @author sioned
+     * @date 2021/04/25 19:03
+     * @Description get user by lastIp
+     */
+    SysUser getUserByCip(String lastIp);
 }

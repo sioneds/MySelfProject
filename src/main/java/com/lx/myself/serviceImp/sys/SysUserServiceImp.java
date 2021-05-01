@@ -78,7 +78,8 @@ public class SysUserServiceImp implements SysUserService {
                 sysUser.getName(),
                 new Date(),
                 cip));
-        request.getSession().setAttribute("loginUser",sysUser);
+        sysUser=getUserByName(sysUser.getUserName());
+        redisTools.saveHash(cip,"cip",sysUser);
         //success
         return ResultCode.SUCCESS;
     }
@@ -116,8 +117,31 @@ public class SysUserServiceImp implements SysUserService {
                     }
                 }
             }
+            sysRole.setPermissions(sysPermissions);
         }
         sysUser.setRoles(roles);
+        return sysUser;
+    }
+
+    /**
+     * @author sioned
+     * @date 2021/05/01 13:48
+     * @Description get user by cip
+     */
+    public SysUser getUserByCip(String cip){
+        SysUser userByCip = sysUserMapper.getUserByCip(cip);
+        SysUser userByName = sysUserMapper.getUserByName(userByCip.getUserName());
+        return userByName;
+    }
+
+    /**
+     * @author sioned
+     * @date 2021/05/01 16:38
+     * @Description get user by redis
+     */
+    @Override
+    public Object getUserByRedis(String cip){
+        Object sysUser =  redisTools.getHash(cip, "cip");
         return sysUser;
     }
 }

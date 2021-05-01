@@ -1,11 +1,18 @@
 package com.lx.myself.config;
 
+import com.lx.myself.pojo.sys.SysUser;
+import com.lx.myself.service.sys.SysUserService;
 import com.lx.myself.tools.MySessionContext;
+import com.lx.myself.tools.RedisTools;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 
 /**
@@ -15,30 +22,38 @@ import java.util.HashMap;
  * @date 2021/04/09 23:35
  **/
 public class LoginInterceptor implements HandlerInterceptor {
+    @Autowired
+    RedisTools redisTools;
+    @Resource
+    public SysUserService SysUserServiceImp;
+
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)throws Exception{
         HashMap<String,Object> map=new HashMap<String,Object>();
         String queryStrings = request.getQueryString();
         if (queryStrings!=null&&queryStrings!=""){
+            try {
+                queryStrings= URLDecoder.decode(request.getQueryString(),"utf-8");//将中文转码
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             String[] splits = queryStrings.split("&");
             for (String queryString :splits){
                 String[] split = queryString.split("=");
                 for (int i=0;i<split.length;i++){
-                    if ("sessionId".equals(split[i])){
-                        map.put("sessionId",split[i+1]);
+                    if ("cip".equals(split[i])){
+                        map.put("cip",split[i+1]);
                     }
                 }
             }
-            String sessionId= (String) map.get("sessionId");
-            if (sessionId!=null&&sessionId!=""){
-                HttpSession session = MySessionContext.getSession(sessionId);
-                request.getSession().setAttribute("loginUser",session.getAttribute("loginUser"));
-                MySessionContext.removeSession(session);
+            String cip= (String) map.get("cip");
+            Object sysUser =  redisTools.getHash(cip, "cip");
+            if (sysUser==null){
+                response.sendRedirect("http://localhost:8081/login.html");
+                return false;
             }
-        }
-        Object loginUser = request.getSession().getAttribute("loginUser");
-        if (loginUser==null){
-            response.sendRedirect("http://localhost:8081/login.html");
-            return false;
+        }else{
+                response.sendRedirect("http://localhost:8081/login.html");
+                return false;
         }
         return true;
     }
