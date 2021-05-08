@@ -28,4 +28,7 @@
     <select id="getUserByCip" resultMap="BaseResultMap">
         select * from sys_user where last_ip= #{lastIp}
     </select>
+    <select id="getUserCount" resultType="java.lang.Integer">
+        select count(*) from sys_user
+    </select>
 </mapper>

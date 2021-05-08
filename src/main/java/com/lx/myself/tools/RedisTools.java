@@ -51,4 +51,14 @@ public  class RedisTools {
     public static void setTempTime(String key){
         redisTemplate.expire(key,5, TimeUnit.MINUTES);
     }
+    /**
+     * @author sioned
+     * @date 2021/05/06 14:07
+     * @Description INCR  value
+     */
+    public static Integer incrValue(String path){
+        Integer increment = Math.toIntExact(redisTemplate.opsForValue().increment(path));
+        return increment;
+    }
+
 }

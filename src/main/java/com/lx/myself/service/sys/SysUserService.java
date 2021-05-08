@@ -37,4 +37,5 @@ public interface SysUserService {
      * @Description get user by redis
      */
     public Object getUserByRedis(String cip);
+
 }

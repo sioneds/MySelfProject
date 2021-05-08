@@ -1,6 +1,8 @@
 package com.lx.myself.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,7 @@ public class MyRedirect {
      * @date 2021/04/11 19:33
      * @Description do to index
      */
-    @RequestMapping("/toIndex")
+    @GetMapping("/toIndex")
     public void toIndex(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect("http://localhost:8081/static/master/index.html");
     }

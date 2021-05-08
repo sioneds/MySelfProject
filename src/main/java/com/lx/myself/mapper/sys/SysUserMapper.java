@@ -38,4 +38,10 @@ public interface SysUserMapper {
      * @Description get user by lastIp
      */
     SysUser getUserByCip(String lastIp);
+    /**
+     * @author sioned
+     * @date 2021/05/06 15:15
+     * @Description get user count
+     */
+    Integer getUserCount();
 }
