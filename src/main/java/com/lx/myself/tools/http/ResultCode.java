@@ -6,7 +6,8 @@ public enum ResultCode {
     NOTFIND_USER(202,"用户不存在"),
     STATE_ABNORMAL(203,"账户状态异常"),
     REDIRECT_EXCEPTION(204,"重定向异常"),
-    NETWORK_ANOMALY(400,"网络异常");
+    NETWORK_ANOMALY(400,"网络异常"),
+    FILE_EXCEPTION(501,"文件处理出现异常");
 //    NO_PERMISSION(211,"权限不足"),
 //    SERVER_ERROR(10000,"服务器异常"),
 //    AUTH_ERROR(10001,"认证失败"),

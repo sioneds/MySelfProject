@@ -51,6 +51,7 @@ public  class RedisTools {
     public static void setTempTime(String key){
         redisTemplate.expire(key,5, TimeUnit.MINUTES);
     }
+
     /**
      * @author sioned
      * @date 2021/05/06 14:07
@@ -59,6 +60,24 @@ public  class RedisTools {
     public static Integer incrValue(String path){
         Integer increment = Math.toIntExact(redisTemplate.opsForValue().increment(path));
         return increment;
+    }
+
+    /**
+     * @author 刘旋
+     * @date 2021/05/13 17:20
+     * @Description set value
+     */
+    public static void setValue(String key,Object object){
+        redisTemplate.opsForValue().set(key,object);
+    }
+
+    /**
+     * @author 刘旋
+     * @date 2021/05/13 17:23
+     * @Description get value
+     */
+    public static Object getValue(String key){
+        return redisTemplate.opsForValue().get(key);
     }
 
 }
